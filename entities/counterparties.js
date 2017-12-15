@@ -1,16 +1,8 @@
-const { join } = require('path');
-const schemas = require('require-all')(join(__dirname, '..', 'schemas'));
-
-const validate = (counterparty) => {
-
-};
+const validate = require('../lib/validators/counterparties');
 
 module.exports = ({ url, request }) => {
   // POST https://b2b.revolut.com/api/1.0/counterparty
-  const add = (counterparty) => {
-    validate(counterparty);
-    return request.post(`${url}/counterparty`, counterparty);
-  };
+  const add = (counterparty) => request.post(`${url}/counterparty`, validate(counterparty));
 
   // DELETE https://b2b.revolut.com/api/1.0/counterparty/<id>
   const remove = (counterpartyId) => {
@@ -26,8 +18,6 @@ module.exports = ({ url, request }) => {
     if (!counterpartyId) throw new Error('You need to provide a counterparty ID.');
     return request.get(`${url}/counterparty/${counterpartyId}`);
   };
-
-  // TODO add validation and tests
 
   return {
     add, remove, getAll, get
