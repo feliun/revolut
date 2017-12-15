@@ -1,10 +1,11 @@
 const R = require('ramda');
-const { join } = require('path');
-const entities = require('require-all')(__dirname + '/entities');
+const entities = require('require-all')(`${__dirname}/entities`);
+const initRequest = require('./lib/request');
 
 const urlByEnv = {
-  sandbox: 'https://sandbox-b2b.revolut.com/api/1.0/',
-  production: 'https://b2b.revolut.com/api/1.0/'
+  test: 'https://testingrevolut.com',
+  sandbox: 'https://sandbox-b2b.revolut.com/api/1.0',
+  production: 'https://b2b.revolut.com/api/1.0'
 };
 
 const DEFAULT_TIMEOUT = 3000;
@@ -13,10 +14,10 @@ module.exports = ({ environment, token, timeout = DEFAULT_TIMEOUT }) => {
   const validEnvironments = Object.keys(urlByEnv);
   if (!environment || !validEnvironments.includes(environment)) throw new Error('You need to specify a valid environment.');
   if (!token) throw new Error('You need to specify an API token.');
+  const request = initRequest({ token, timeout });
   const config = {
     url: urlByEnv[environment],
-    token,
-    timeout
+    request
   };
   const api = R.pipe(
     R.values,
