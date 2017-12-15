@@ -88,6 +88,10 @@ qs@^6.5.1:
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.1.tgz#349cdf6eef89ec45c12d7d5eb3fc0c870343a6d8"
 
+ramda@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
+
 readable-stream@^2.0.5:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.3.3.tgz#368f2512d79f9d46fdfc71349ae7878bbc1eb95c"
@@ -99,6 +103,10 @@ readable-stream@^2.0.5:
     safe-buffer "~5.1.1"
     string_decoder "~1.0.3"
     util-deprecate "~1.0.1"
+
+require-all@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/require-all/-/require-all-2.2.0.tgz#b4420c233ac0282d0ff49b277fb880a8b5de0894"
 
 safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.1"

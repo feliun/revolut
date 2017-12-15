@@ -23,6 +23,8 @@
   },
   "homepage": "https://github.com/feliun/revolut#readme",
   "dependencies": {
+    "ramda": "^0.25.0",
+    "require-all": "^2.2.0",
     "superagent": "^3.8.2"
   }
 }
