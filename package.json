@@ -1,0 +1,28 @@
+{
+  "name": "revolut",
+  "version": "0.0.1",
+  "description": "An API client for revolut",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/feliun/revolut.git"
+  },
+  "keywords": [
+    "revolut",
+    "api",
+    "banking",
+    "fintech"
+  ],
+  "author": "Felipe Polo Ruiz <felipe.polo@gmail.com> (https://github.com/feliun)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/feliun/revolut/issues"
+  },
+  "homepage": "https://github.com/feliun/revolut#readme",
+  "dependencies": {
+    "superagent": "^3.8.2"
+  }
+}
