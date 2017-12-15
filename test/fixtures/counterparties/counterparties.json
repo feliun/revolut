@@ -1,0 +1,29 @@
+[
+  {
+    "id": "6b3c696e-7c3d-464a-8dbe-fc70e183d42e",
+    "type": "revolut",
+    "phone": "+44723456789",
+    "profile_type": "personal",
+    "name": "Joe Smith",
+    "country": "GB",
+    "created_at": "2017-06-01T11:11:11.0Z",
+    "updated_at": "2017-06-01T11:11:11.0Z"
+  },
+  {
+    "id": "e0cbf846-3726-4ee0-82a8-48be0bc28efd",
+    "type": "external",
+    "phone": "+44723111111",
+    "profile_type": "business",
+    "name": "Bolts & Wistles Ltd",
+    "country": "GB",
+    "beneficiary_id": "45dde477-0d57-4e59-8999-803e4973dbab",
+    "reference": "12345678",
+    "base_currency": "GBP",
+    "state": "created",
+    "account_no": "12345678",
+    "routing_number": "123456789",
+    "beneficiary_type": "US",
+    "created_at": "2017-06-21T11:22:11.0Z",
+    "updated_at": "2017-06-21T11:22:11.0Z"
+  }
+]
