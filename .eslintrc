@@ -1,0 +1,19 @@
+{
+  "extends": ["airbnb/base", "plugin:import/errors"],
+  "rules": {
+    "id-length": 0,
+    "no-underscore-dangle": 0,
+    "func-names": 0,
+    "max-len": 0,
+    "one-var": 0,
+    "eqeqeq": 0,
+    "camelcase": 0,
+    "no-param-reassign": [2, { "props": false }],
+    "consistent-return": 0,
+    "arrow-parens": 0,
+    "comma-dangle": 0,
+    "no-plusplus": 0,
+    "global-require": 0,
+    "no-mixed-operators": 0
+  }
+}
