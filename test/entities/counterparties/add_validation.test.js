@@ -7,6 +7,7 @@ const initRevolut = require('../../..');
 const counterparty_response = require('../../fixtures/counterparties/counterparty_response.json');
 const uk_account = require('../../fixtures/counterparties/uk_account.json');
 const us_account = require('../../fixtures/counterparties/us_account.json');
+const eu_account = require('../../fixtures/counterparties/eu_account.json');
 
 // Based on https://revolutdev.github.io/business-api/?shell--sandbox#counterparties
 
@@ -57,7 +58,7 @@ describe('Validation for new counterparties', () => {
       const faultyAccount = R.omit(['account_no'], uk_account);
       return Promise.resolve()
         .then(() => add(faultyAccount))
-        .then(() => { throw new Error('I shouldn not be here!'); })
+        .then(() => { throw new Error('I should not be here!'); })
         .catch((error) => expect(error.message).to.equal('ValidationError: child "account_no" fails because ["account_no" is required]'));
     });
   });
@@ -69,8 +70,20 @@ describe('Validation for new counterparties', () => {
       const faultyAccount = R.omit(['routing_number'], us_account);
       return Promise.resolve()
         .then(() => add(faultyAccount))
-        .then(() => { throw new Error('I shouldn not be here!'); })
+        .then(() => { throw new Error('I should not be here!'); })
         .catch((error) => expect(error.message).to.equal('ValidationError: child "routing_number" fails because ["routing_number" is required]'));
+    });
+  });
+
+  describe('Validation for new EUR Bank Account users', () => {
+    it('POSTs a new valid EUR bank account counterparty', () => add(eu_account));
+
+    it('fails to add an invalid EUR Bank Account', () => {
+      const faultyAccount = R.omit(['bic'], eu_account);
+      return Promise.resolve()
+        .then(() => add(faultyAccount))
+        .then(() => { throw new Error('I should not be here!'); })
+        .catch((error) => expect(error.message).to.equal('ValidationError: child "bic" fails because ["bic" is required]'));
     });
   });
 });

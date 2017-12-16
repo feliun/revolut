@@ -1,0 +1,15 @@
+{
+  "name": "John Smith Co.",
+  "country": "ESP",
+  "currency": "EUR",
+  "account_no": "1111222233334444",
+  "bic": "73663784",
+  "email": "john@smith.co",
+  "address": {
+    "street_line1": "Calle del Retiro",
+    "region": "Centro",
+    "postcode": "28014",
+    "city": "Madrid",
+    "country": "ESP"
+  }
+}
