@@ -1,13 +1,15 @@
 const R = require('ramda');
+const { join } = require('path');
 const { OK } = require('http-status-codes');
 const expect = require('expect.js');
 const nock = require('nock');
 const initRevolut = require('../../..');
-
-const counterparty_response = require('../../fixtures/counterparties/counterparty_response.json');
-const uk_account = require('../../fixtures/counterparties/uk_account.json');
-const us_account = require('../../fixtures/counterparties/us_account.json');
-const eu_account = require('../../fixtures/counterparties/eu_account.json');
+const {
+  counterparty_response,
+  uk_account,
+  us_account,
+  other_account
+} = require('require-all')(join(__dirname, '..', '..', 'fixtures', 'counterparties'));
 
 // Based on https://revolutdev.github.io/business-api/?shell--sandbox#counterparties
 
@@ -75,11 +77,11 @@ describe('Validation for new counterparties', () => {
     });
   });
 
-  describe('Validation for new EUR Bank Account users', () => {
-    it('POSTs a new valid EUR bank account counterparty', () => add(eu_account));
+  describe('Validation for (other) Bank Account users', () => {
+    it('POSTs a new valid (other) bank account counterparty', () => add(other_account));
 
-    it('fails to add an invalid EUR Bank Account', () => {
-      const faultyAccount = R.omit(['bic'], eu_account);
+    it('fails to add an invalid (other) Bank Account', () => {
+      const faultyAccount = R.omit(['bic'], other_account);
       return Promise.resolve()
         .then(() => add(faultyAccount))
         .then(() => { throw new Error('I should not be here!'); })
