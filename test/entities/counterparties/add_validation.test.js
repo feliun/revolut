@@ -8,6 +8,8 @@ const {
   counterparty_response,
   uk_account,
   us_account,
+  revolut_account,
+  eu_account,
   other_account
 } = require('require-all')(join(__dirname, '..', '..', 'fixtures', 'counterparties'));
 
@@ -33,23 +35,14 @@ describe('Validation for new counterparties', () => {
   };
 
   describe('Validation for new Revolut users', () => {
-    it('POSTs a new valid revolut counterparty', () => {
-      const revolutAccount = {
-        name: 'Luke Skywalker',
-        profile_type: 'personal'
-      };
-      return add(revolutAccount);
-    });
+    it('POSTs a new valid revolut counterparty', () => add(revolut_account));
 
     it('fails to add an invalid revolut counterparty', () => {
-      const revolutAccount = {
-        name: null,
-        profile_type: 'personal'
-      };
+      const faultyAccount = R.omit(['name'], revolut_account);
       return Promise.resolve()
-        .then(() => add(revolutAccount))
+        .then(() => add(faultyAccount))
         .then(() => { throw new Error('I should not be here!'); })
-        .catch((error) => expect(error.message).to.equal('ValidationError: child "name" fails because ["name" must be a string]'));
+        .catch((error) => expect(error.message).to.equal('ValidationError: child "name" fails because ["name" is required]'));
     });
   });
 
@@ -62,6 +55,18 @@ describe('Validation for new counterparties', () => {
         .then(() => add(faultyAccount))
         .then(() => { throw new Error('I should not be here!'); })
         .catch((error) => expect(error.message).to.equal('ValidationError: child "account_no" fails because ["account_no" is required]'));
+    });
+  });
+
+  describe('Validation for new EU Bank Account users', () => {
+    it('POSTs a new valid EU bank account counterparty', () => add(eu_account));
+
+    it('fails to add an invalid EU Bank Account', () => {
+      const faultyAccount = R.omit(['bic'], eu_account);
+      return Promise.resolve()
+        .then(() => add(faultyAccount))
+        .then(() => { throw new Error('I should not be here!'); })
+        .catch((error) => expect(error.message).to.equal('ValidationError: child "bic" fails because ["bic" is required]'));
     });
   });
 
