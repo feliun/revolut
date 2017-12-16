@@ -30,6 +30,7 @@ describe('Accounts API', () => {
   it('fails to get a single account if no account ID is provided', () =>
     Promise.resolve()
       .then(() => revolut.accounts.get(null))
+      .then(() => { throw new Error('I shouldn not be here!'); })
       .catch((error) => expect(error.message).to.equal('You need to provide an account ID.')));
 
   it('GETs a single account', () => {
@@ -48,6 +49,7 @@ describe('Accounts API', () => {
       .reply(NOT_FOUND, undefined);
 
     return revolut.accounts.get(1234)
+      .then(() => { throw new Error('I shouldn not be here!'); })
       .catch((error) => {
         expect(error.statusCode).to.equal(NOT_FOUND);
         expect(error.message).to.equal('404 - undefined');

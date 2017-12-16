@@ -44,6 +44,7 @@ describe('Validation for new counterparties', () => {
       };
       return Promise.resolve()
         .then(() => add(revolutAccount))
+        .then(() => { throw new Error('I shouldn not be here!'); })
         .catch((error) => expect(error.message).to.equal('ValidationError: child "name" fails because ["name" must be a string]'));
     });
   });
@@ -55,6 +56,7 @@ describe('Validation for new counterparties', () => {
       const faultyAccount = R.omit(['account_no'], uk_account);
       return Promise.resolve()
         .then(() => add(faultyAccount))
+        .then(() => { throw new Error('I shouldn not be here!'); })
         .catch((error) => expect(error.message).to.equal('ValidationError: child "account_no" fails because ["account_no" is required]'));
     });
   });

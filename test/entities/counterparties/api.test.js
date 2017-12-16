@@ -32,6 +32,7 @@ describe('Counterparties API', () => {
   it('fails to DELETE a single counterparty if no counterparty ID is provided', () =>
     Promise.resolve()
       .then(() => revolut.counterparties.remove(null))
+      .then(() => { throw new Error('I shouldn not be here!'); })
       .catch((error) => expect(error.message).to.equal('You need to provide a counterparty ID.')));
 
   it('DELETEs a single counterparty', () => {
@@ -56,6 +57,7 @@ describe('Counterparties API', () => {
   it('fails to get a single counterparty if no counterparty ID is provided', () =>
     Promise.resolve()
       .then(() => revolut.counterparties.get(null))
+      .then(() => { throw new Error('I shouldn not be here!'); })
       .catch((error) => expect(error.message).to.equal('You need to provide a counterparty ID.')));
 
   it('GETs a single counterparty', () => {
@@ -74,6 +76,7 @@ describe('Counterparties API', () => {
       .reply(NOT_FOUND, undefined);
 
     return revolut.counterparties.get(1234)
+      .then(() => { throw new Error('I shouldn not be here!'); })
       .catch((error) => {
         expect(error.statusCode).to.equal(NOT_FOUND);
         expect(error.message).to.equal('404 - undefined');
