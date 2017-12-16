@@ -1,0 +1,15 @@
+{
+  "name": "John Smith Co.",
+  "country": "US",
+  "currency": "USD",
+  "account_no": "12345678",
+  "routing_number": "73663784",
+  "email": "john@smith.co",
+  "address": {
+    "street_line1": "34 Mei Dei",
+    "region": "East End",
+    "postcode": "W87303",
+    "city": "Houston",
+    "country": "US"
+  }
+}

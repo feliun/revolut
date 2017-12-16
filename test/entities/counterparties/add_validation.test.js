@@ -6,6 +6,7 @@ const initRevolut = require('../../..');
 
 const counterparty_response = require('../../fixtures/counterparties/counterparty_response.json');
 const uk_account = require('../../fixtures/counterparties/uk_account.json');
+const us_account = require('../../fixtures/counterparties/us_account.json');
 
 // Based on https://revolutdev.github.io/business-api/?shell--sandbox#counterparties
 
@@ -44,7 +45,7 @@ describe('Validation for new counterparties', () => {
       };
       return Promise.resolve()
         .then(() => add(revolutAccount))
-        .then(() => { throw new Error('I shouldn not be here!'); })
+        .then(() => { throw new Error('I should not be here!'); })
         .catch((error) => expect(error.message).to.equal('ValidationError: child "name" fails because ["name" must be a string]'));
     });
   });
@@ -58,6 +59,18 @@ describe('Validation for new counterparties', () => {
         .then(() => add(faultyAccount))
         .then(() => { throw new Error('I shouldn not be here!'); })
         .catch((error) => expect(error.message).to.equal('ValidationError: child "account_no" fails because ["account_no" is required]'));
+    });
+  });
+
+  describe('Validation for new US Bank Account users', () => {
+    it('POSTs a new valid US bank account counterparty', () => add(us_account));
+
+    it('fails to add an invalid US Bank Account', () => {
+      const faultyAccount = R.omit(['routing_number'], us_account);
+      return Promise.resolve()
+        .then(() => add(faultyAccount))
+        .then(() => { throw new Error('I shouldn not be here!'); })
+        .catch((error) => expect(error.message).to.equal('ValidationError: child "routing_number" fails because ["routing_number" is required]'));
     });
   });
 });
