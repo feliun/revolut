@@ -1,7 +1,7 @@
 const expect = require('expect.js');
 const initRevolut = require('..');
 
-const entities = ['accounts', 'counterparties'];
+const entities = ['accounts', 'counterparties', 'payments'];
 
 describe('Revolut API initialisation', () => {
   it('fails to initialise when environment is not provided', () =>
