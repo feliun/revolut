@@ -8,7 +8,14 @@ module.exports = ({ url, request }) => {
     return request.post(`${url}/transfer`, validate(payment));
   };
 
+  // POST https://b2b.revolut.com/api/1.0/pay
+  const pay = (payment) => {
+    debug('Processing payment');
+    return request.post(`${url}/pay`, validate(payment));
+  };
+
   return {
-    transfer
+    transfer,
+    pay
   };
 };
