@@ -28,10 +28,18 @@ module.exports = ({ url, request }) => {
     return request.get(`${url}/transaction/${requestId}?id_type=request_id`);
   };
 
+  // DELETE https://b2b.revolut.com/api/1.0/transaction/<id>
+  const cancel = (txId) => {
+    if (!txId) throw new Error('You need to provide a transaction ID.');
+    debug(`Cancelling payment with ID ${txId}`);
+    return request.remove(`${url}/transaction/${txId}`);
+  };
+
   return {
     transfer,
     pay,
     getStatusById,
-    getStatusByRequestId
+    getStatusByRequestId,
+    cancel
   };
 };

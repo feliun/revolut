@@ -1,5 +1,5 @@
 const R = require('ramda');
-const { OK } = require('http-status-codes');
+const { OK, NO_CONTENT } = require('http-status-codes');
 const expect = require('expect.js');
 const nock = require('nock');
 const { join } = require('path');
@@ -89,6 +89,22 @@ describe('Payments API', () => {
         .reply(OK, payment_status);
       return revolut.payments.getStatusByRequestId(reqId)
         .then((response) => expect(response).to.eql(payment_status));
+    });
+
+    it('fails to DELETE a payment if no transaction ID is provided', () =>
+      Promise.resolve()
+        .then(() => revolut.payments.cancel(null))
+        .then(() => { throw new Error('I shouldn not be here!'); })
+        .catch((error) => expect(error.message).to.equal('You need to provide a transaction ID.')));
+
+    it('DELETEs a payment', () => {
+      const txId = 123456789;
+      nock(REVOLUT_URL, { reqheaders: { Authorization: `Bearer ${token}` } })
+        .delete(`/transaction/${txId}`)
+        .reply(NO_CONTENT);
+
+      return revolut.payments.cancel(txId)
+        .then((res) => expect(res).to.eql(undefined));
     });
   });
 });
