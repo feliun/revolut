@@ -75,6 +75,21 @@ describe('Payments API', () => {
       return revolut.payments.getStatusById(txId)
         .then((response) => expect(response).to.eql(payment_status));
     });
+
+    it('fails to get payment status if no request ID is provided', () =>
+      Promise.resolve()
+        .then(() => revolut.payments.getStatusByRequestId(null))
+        .then(() => { throw new Error('I should not be here!'); })
+        .catch((error) => expect(error.message).to.equal('You need to provide a request ID.')));
+
+    it('GETs payment status by ID', () => {
+      const reqId = 123456;
+      nock(REVOLUT_URL, { reqheaders: { Authorization: `Bearer ${token}` } })
+        .get(`/transaction/${reqId}?id_type=request_id`)
+        .reply(OK, payment_status);
+      return revolut.payments.getStatusByRequestId(reqId)
+        .then((response) => expect(response).to.eql(payment_status));
+    });
   });
 });
 

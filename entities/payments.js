@@ -21,9 +21,17 @@ module.exports = ({ url, request }) => {
     return request.get(`${url}/transaction/${txId}`);
   };
 
+  // GET https://b2b.revolut.com/api/1.0/transaction/<request_id>
+  const getStatusByRequestId = (requestId) => {
+    if (!requestId) throw new Error('You need to provide a request ID.');
+    debug(`Getting payment status for request ${requestId}`);
+    return request.get(`${url}/transaction/${requestId}?id_type=request_id`);
+  };
+
   return {
     transfer,
     pay,
-    getStatusById
+    getStatusById,
+    getStatusByRequestId
   };
 };
