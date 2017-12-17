@@ -7,7 +7,8 @@ const initRevolut = require('../..');
 
 const {
   transfer,
-  payment: samplePayment
+  payment: samplePayment,
+  payment_status
 } = require('require-all')(join(__dirname, '..', 'fixtures', 'payments'));
 
 // Based on https://revolutdev.github.io/business-api/?shell--sandbox#payments
@@ -58,6 +59,21 @@ describe('Payments API', () => {
         .then(() => processPayment(faultyPayment))
         .then(() => { throw new Error('I should not be here!'); })
         .catch((error) => expect(error.message).to.equal('ValidationError: child "currency" fails because ["currency" is required]'));
+    });
+
+    it('fails to get payment status if no transaction ID is provided', () =>
+      Promise.resolve()
+        .then(() => revolut.payments.getStatusById(null))
+        .then(() => { throw new Error('I should not be here!'); })
+        .catch((error) => expect(error.message).to.equal('You need to provide a transaction ID.')));
+
+    it('GETs payment status by ID', () => {
+      const txId = 123456;
+      nock(REVOLUT_URL, { reqheaders: { Authorization: `Bearer ${token}` } })
+        .get(`/transaction/${txId}`)
+        .reply(OK, payment_status);
+      return revolut.payments.getStatusById(txId)
+        .then((response) => expect(response).to.eql(payment_status));
     });
   });
 });
