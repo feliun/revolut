@@ -1,3 +1,4 @@
+const R = require('ramda');
 const debug = require('debug')('revolut:payments');
 const validate = require('../lib/validators/payments');
 
@@ -35,11 +36,26 @@ module.exports = ({ url, request }) => {
     return request.remove(`${url}/transaction/${txId}`);
   };
 
+  // GET https://b2b.revolut.com/api/1.0/transactions
+  const getByCriteria = (criteria = {}) => {
+    const options = ['from', 'to', 'counterparty', 'count', 'type'];
+    const generateParams = R.pipe(
+      R.keys,
+      R.intersection(options),
+      R.map((option) => `${option}=${criteria[option]}`),
+      R.join('&')
+    );
+    const queryParams = generateParams(criteria);
+    debug(`Getting payments for criteria ${queryParams}`);
+    return request.get(`${url}/transactions?${queryParams}`);
+  };
+
   return {
     transfer,
     pay,
     getStatusById,
     getStatusByRequestId,
-    cancel
+    getByCriteria,
+    cancel,
   };
 };

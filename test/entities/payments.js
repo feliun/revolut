@@ -106,6 +106,26 @@ describe('Payments API', () => {
       return revolut.payments.cancel(txId)
         .then((res) => expect(res).to.eql(undefined));
     });
+
+    it('GETs payments based on a certain criteria', () => {
+      const result = [{}, {}, {}];
+      nock(REVOLUT_URL, { reqheaders: { Authorization: `Bearer ${token}` } })
+        .get('/transactions?count=20&from=2017-10-12')
+        .reply(OK, result);
+
+      return revolut.payments.getByCriteria({ count: 20, from: '2017-10-12' })
+        .then((res) => expect(res).to.eql(result));
+    });
+
+    it('GETs payments when no criteria is specified', () => {
+      const result = [{}, {}, {}];
+      nock(REVOLUT_URL, { reqheaders: { Authorization: `Bearer ${token}` } })
+        .get('/transactions?')
+        .reply(OK, result);
+
+      return revolut.payments.getByCriteria()
+        .then((res) => expect(res).to.eql(result));
+    });
   });
 });
 
