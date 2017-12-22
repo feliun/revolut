@@ -43,29 +43,29 @@ return revolut.accounts.get("insert an account ID here");
 ## counterparties
 API for [counterparties](https://revolutdev.github.io/business-api/?shell--sandbox#counterparties)
 
-###add
+### add
 ```
 const revolutAccount = ...; 
 // https://revolutdev.github.io/business-api/#add-counterparty
 return revolut.counterparties.add(revolut_account);
 ```
 
-###remove
+### remove
 ```
 return revolut.counterparties.remove("insert a counterparty ID here");
 ```
 
-###getAll
+### getAll
 ```
 return revolut.counterparties.getAll();
 ```
 
-###get
+### get
 ```
 return revolut.counterparties.get("insert a counterparty ID here");
 ```
 
-##payments
+## payments
 API for [payments](https://revolutdev.github.io/business-api/?shell--sandbox#payments)
 ###transfer
 ```
@@ -74,7 +74,7 @@ const payment = ...;
 return revolut.payments.transfer(payment);
 ```
 
-###pay
+### pay
 ```
 const payment = ...;
 /*
@@ -83,29 +83,29 @@ https://revolutdev.github.io/business-api/?shell--sandbox#create-payment
 return revolut.payments.pay(payment);
 ```
 
-###getStatusById
+### getStatusById
 ```
 return revolut.payments.getStatusById("insert a tx ID here");
 ```
 
-###getStatusByRequestId
+### getStatusByRequestId
 ```
 return revolut.payments.getStatusByRequestId("insert a tx ID here");
 ```
 
-###getByCriteria
+### getByCriteria
 ```
 // https://revolutdev.github.io/business-api/?shell--sandbox#get-transactions
 return revolut.payments.getByCriteria({ count: 20, from: '2017-10-12' });
 ```
 
-###cancel
+### cancel
 ```
 return revolut.payments.cancel("insert a tx ID here");
 ```
 
-##webhooks
-###setup
+## webhooks
+### setup
 ```
 return revolut.webhooks.setup({ "url": "https://example.com/example/path" });
 ```
