@@ -4,5 +4,5 @@
   "target_account_id": "5138z40d1-05bb-49c0-b130-75e8cf2f7693",
   "amount": 1050023.1163,
   "currency": "EUR",
-  "description": "Expenses funding"
+  "reference": "Expenses funding"
 }

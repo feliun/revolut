@@ -1,21 +1,22 @@
 {
-  "id": "6b3c696e-7c3d-464a-8dbe-fc70e183d42e",
-  "type": "business",
+  "id": "830e79d9-7b0a-45d3-a2a3-c0b291be3bf7",
+  "name": "John Smith",
   "phone": "+44723456789",
-  "profile_type": "revolut",
-  "name": "John Smith Co.",
+  "profile_type": "personal",
   "country": "GB",
   "state": "created",
-  "updated_at": "2017-06-01T11:11:11.0Z",
-  "created_at": "2017-06-01T11:11:11.0Z",
+  "created_at": "2017-12-19T15:58:34.485Z",
+  "updated_at": "2017-12-19T15:58:34.485Z",
   "accounts": [
     {
-      "id": "e183d42e-7c3d-8dbe-464a-fc706b3c696e",
-      "currency": "GBP"
+      "id": "7a39e16d-41a6-460f-a7d7-341575037c9d",
+      "currency": "GBP",
+      "type": "revolut"
     },
     {
-      "id": "e183d42e-7c3d-8dbe-464a-fc706b3c696e",
-      "currency": "EUR"
+      "id": "50de976a-6704-4424-8998-9efc4ef0abf5",
+      "currency": "EUR",
+      "type": "revolut"
     }
   ]
 }

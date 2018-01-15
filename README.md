@@ -67,19 +67,17 @@ return revolut.counterparties.get("insert a counterparty ID here");
 
 ## payments
 API for [payments](https://revolutdev.github.io/business-api/?shell--sandbox#payments)
-###transfer
+### transfer
 ```
 const payment = ...;
-/* https://revolutdev.github.io/business-api/?shell--sandbox#transfer-between-own-accounts-in-the-same-currency */
+// https://revolutdev.github.io/business-api/?shell--sandbox#transfer-between-own-accounts-in-the-same-currency
 return revolut.payments.transfer(payment);
 ```
 
 ### pay
 ```
 const payment = ...;
-/*
-https://revolutdev.github.io/business-api/?shell--sandbox#create-payment
-*/
+// https://revolutdev.github.io/business-api/?shell--sandbox#create-payment
 return revolut.payments.pay(payment);
 ```
 

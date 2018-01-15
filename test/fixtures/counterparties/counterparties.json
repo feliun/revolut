@@ -1,29 +1,51 @@
 [
   {
-    "id": "6b3c696e-7c3d-464a-8dbe-fc70e183d42e",
-    "type": "revolut",
-    "phone": "+44723456789",
+    "id": "ce851ec3-e018-47e8-894d-089fe8c6b6c8",
+    "name": "John Smith",
+    "phone": "+441234958298",
     "profile_type": "personal",
-    "name": "Joe Smith",
     "country": "GB",
-    "created_at": "2017-06-01T11:11:11.0Z",
-    "updated_at": "2017-06-01T11:11:11.0Z"
+    "state": "created",
+    "created_at": "2017-12-19T18:34:47.348Z",
+    "updated_at": "2017-12-19T18:34:47.348Z",
+    "accounts": [
+      {
+        "id": "3342e60b-70c5-4170-b00f-73fee46c93c9",
+        "currency": "GBP",
+        "type": "revolut"
+      },
+      {
+        "id": "aa70d9be-c851-44ac-abb8-f80ac06bbe37",
+        "currency": "USD",
+        "type": "revolut"
+      },
+      {
+        "id": "4e32d331-68aa-4e4b-a295-3e3d7625819b",
+        "currency": "GBP",
+        "type": "external",
+        "account_no": "12345678",
+        "sort_code": "223344",
+        "email": "acm@me.ccq",
+        "name": "Acme Corp.",
+        "bank_country": "GB",
+        "recipient_charges": "no"
+      }
+    ]
   },
   {
-    "id": "e0cbf846-3726-4ee0-82a8-48be0bc28efd",
-    "type": "external",
-    "phone": "+44723111111",
+    "id": "ffff1ec3-e018-47e8-894d-089fe8c6b6c8",
+    "name": "Anderson Co.",
     "profile_type": "business",
-    "name": "Bolts & Wistles Ltd",
     "country": "GB",
-    "beneficiary_id": "45dde477-0d57-4e59-8999-803e4973dbab",
-    "reference": "12345678",
-    "base_currency": "GBP",
     "state": "created",
-    "account_no": "12345678",
-    "routing_number": "123456789",
-    "beneficiary_type": "US",
-    "created_at": "2017-06-21T11:22:11.0Z",
-    "updated_at": "2017-06-21T11:22:11.0Z"
+    "created_at": "2017-11-29T18:34:47.348Z",
+    "updated_at": "2017-11-29T18:34:47.348Z",
+    "accounts": [
+      {
+        "id": "9988e60b-70c5-4170-b00f-73fee46c93c9",
+        "currency": "GBP",
+        "type": "revolut"
+      }
+    ]
   }
 ]

@@ -7,5 +7,5 @@
   },
   "amount": 123.11,
   "currency": "EUR",
-  "description": "Invoice payment #123"
+  "reference": "Invoice payment #123"
 }
