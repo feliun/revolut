@@ -7,7 +7,10 @@
     "test": "NODE_ENV=test mocha --reporter spec './test/**/*.js'",
     "lint": "eslint .",
     "precommit": "npm run lint",
-    "prepush": "npm run test"
+    "prepush": "npm run test",
+    "publish-patch": "node ./bin/publish patch && npm publish",
+    "publish-minor": "node ./bin/publish minor && npm publish",
+    "publish-major": "node ./bin/publish major && npm publish"
   },
   "repository": {
     "type": "git",
@@ -46,6 +49,7 @@
     "inquirer": "^5.0.0",
     "mocha": "^4.0.1",
     "nock": "^9.1.4",
-    "npm": "^5.6.0"
+    "npm": "^5.6.0",
+    "semver": "^5.5.0"
   }
 }
