@@ -9,7 +9,7 @@ This NodeJS APIs is helpful because:
 
 1. it hides revolut urls from you
 2. Configuration is injected on startup and used everywhere in a transparent way
-3. It applies validation on input messages
+3. It applies validation on input messages (unless opted out, useful for debugging)
 4. It exposes an API based on promises
 5. It offers underlying information by using `DEBUG=revolut*`
 6. Handles errors appropriately
@@ -21,13 +21,14 @@ To use the revolut wrapper you just need to initialise it like this:
 const initRevolut = require('revolut');
 const config = {
     environment: 'sandbox',
-    token: '7634253428AKHDJAGWD7868'
+    token: '7634253428AKHDJAGWD7868',
+    validation: false,
     timeout: 2000
 };
 const revolut = initRevolut(config);
 ```
 
-As you can guess, you can pass in configuration `environment` (sandbox|production), `token` and `timeout` for requests (this one is optional).
+As you can guess, you can pass in configuration `environment` (sandbox|production), `token` and `timeout` for requests (this one is optional). Also, `validation` will be _true_ by default.
 
 ## accounts
 API for [accounts](https://revolutdev.github.io/business-api/?shell--sandbox#accounts)

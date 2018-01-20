@@ -1,8 +1,9 @@
 const R = require('ramda');
 const debug = require('debug')('revolut:payments');
-const validate = require('../lib/validators/payments');
 
-module.exports = ({ url, request }) => {
+module.exports = ({ url, request, validation }) => {
+  const validate = validation ? require('../lib/validators/payments') : R.identity;
+
   // POST https://b2b.revolut.com/api/1.0/transfer
   const transfer = (payment) => {
     debug('Processing transfer within Revolut accounts');

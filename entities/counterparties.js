@@ -1,7 +1,9 @@
+const R = require('ramda');
 const debug = require('debug')('revolut:counterparties');
-const validate = require('../lib/validators/counterparties');
 
-module.exports = ({ url, request }) => {
+module.exports = ({ url, request, validation }) => {
+  const validate = validation ? require('../lib/validators/counterparties') : R.identity;
+
   // POST https://b2b.revolut.com/api/1.0/counterparty
   const add = (counterparty) => {
     debug('Adding a new counterparty');

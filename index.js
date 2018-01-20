@@ -10,14 +10,17 @@ const urlByEnv = {
 
 const DEFAULT_TIMEOUT = 3000;
 
-module.exports = ({ environment, token, timeout = DEFAULT_TIMEOUT }) => {
+module.exports = ({
+  environment, token, timeout = DEFAULT_TIMEOUT, validation = true
+}) => {
   const validEnvironments = Object.keys(urlByEnv);
   if (!environment || !validEnvironments.includes(environment)) throw new Error('You need to specify a valid environment.');
   if (!token) throw new Error('You need to specify an API token.');
   const request = initRequest({ token, timeout });
   const config = {
     url: urlByEnv[environment],
-    request
+    request,
+    validation
   };
   const api = R.pipe(
     R.values,
