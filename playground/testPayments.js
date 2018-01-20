@@ -49,9 +49,6 @@ const testCounterpartyPayment = (accounts, counterparties, payments) => {
 };
 
 const testRevolutTransfers = (accounts, payments) => {
-  const byGBP = ({ currency }) => currency === 'GBP';
-  const byBalance = (a, b) => a.balance < b.balance;
-
   const processTransfer = (source, target, reference = '') => {
     const unique = `${new Date().getTime()}`;
     const revolutTransfer = {
@@ -65,9 +62,8 @@ const testRevolutTransfers = (accounts, payments) => {
     return payments.transfer(revolutTransfer);
   };
 
-  return accounts.getAll()
-    .then((myAccounts) => {
-      const gbpAccounts = myAccounts.filter(byGBP).sort(byBalance);
+  return getGBPAccounts(accounts)
+    .then((gbpAccounts) => {
       if (gbpAccounts.length < 2) throw new Error('At least 2 GBP revolut accounts are needed');
       const [source, target] = gbpAccounts;
       const firstRef = 'Reference 1 for revolut transfers';
