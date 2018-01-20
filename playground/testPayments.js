@@ -1,56 +1,14 @@
 const assert = require('assert');
-const R = require('ramda');
 const { join } = require('path');
-const program = require('commander');
-const inquirer = require('inquirer');
-const initRevolut = require('..');
-const {
-  revolut_account,
-  uk_account,
-  us_account,
-  eu_account,
-  other_account
-} = require('require-all')(join(__dirname, '..', 'test', 'fixtures', 'counterparties'));
 
 const {
   transfer,
   payment: samplePayment
 } = require('require-all')(join(__dirname, '..', 'test', 'fixtures', 'payments'));
 
-const prompt = inquirer.createPromptModule();
-
-program
-  .version('0.0.1')
-  .option('-e, --environment <environment>', 'environment')
-  .option('-t, --token <token>', 'token')
-  .parse(process.argv);
-
-const questions = [];
-
-if (!program.environment) {
-  questions.push({
-    name: 'environment', type: 'list', message: 'Environment', choices: ['sandbox', 'live'], default: 'sandbox'
-  });
-}
-if (!program.token) {
-  questions.push({
-    name: 'token', type: 'password', message: 'Token', default: 'token'
-  });
-}
-
-const sequential = R.reduce((chain, promise) => chain.then(promise), Promise.resolve());
-
-const format = (json) => JSON.stringify(json, null, 2);
-
-const tryAccounts = ({ accounts }) =>
-  Promise.all([
-    accounts.getAll(),
-    accounts.get('7736d7a9-b283-4b22-a14a-0633054550e7')
-  ]).then(([myAccounts, myAccount]) => {
-    console.log(`myAccounts: ${format(myAccounts)}`);
-    console.log(`myAccount: ${format(myAccount)}`);
-    return Promise.resolve();
-  });
+const {
+  uk_account
+} = require('require-all')(join(__dirname, '..', 'test', 'fixtures', 'counterparties'));
 
 const getGBPAccounts = (accounts) => {
   const byGBP = ({ currency }) => currency === 'GBP';
@@ -60,7 +18,7 @@ const getGBPAccounts = (accounts) => {
     .then((myAccounts) => myAccounts.filter(byGBP).sort(byBalance));
 };
 
-const tryCounterpartyPayment = (accounts, counterparties, payments) => {
+const testCounterpartyPayment = (accounts, counterparties, payments) => {
   const processPayment = (source, target, reference = '') => {
     const unique = `${new Date().getTime()}`;
     const payment = {
@@ -90,7 +48,7 @@ const tryCounterpartyPayment = (accounts, counterparties, payments) => {
       }));
 };
 
-const tryRevolutTransfers = (accounts, payments) => {
+const testRevolutTransfers = (accounts, payments) => {
   const byGBP = ({ currency }) => currency === 'GBP';
   const byBalance = (a, b) => a.balance < b.balance;
 
@@ -132,31 +90,7 @@ const tryRevolutTransfers = (accounts, payments) => {
     });
 };
 
-const tryPayments = ({ accounts, counterparties, payments }) =>
-  tryRevolutTransfers(accounts, payments);
-// .then(() => tryCounterpartyPayment(accounts, counterparties, payments));
 
-const tryCounterparties = ({ counterparties }) =>
-  sequential([
-    // counterparties.add(revolut_account),
-    counterparties.add(uk_account),
-    counterparties.add(us_account),
-    // counterparties.add(eu_account),
-    // counterparties.add(other_account),
-    counterparties.getAll().then((cps) => {
-      const deletions = cps.map(({ id }) => counterparties.remove(id));
-      return Promise.all(deletions);
-    }),
-  ]);
-
-prompt(questions)
-  .then(({ environment = program.environment, token = program.token }) => {
-    const revolut = initRevolut({ environment, token, timeout: 5000 });
-    return sequential([
-      tryAccounts(revolut),
-      tryCounterparties(revolut),
-      tryPayments(revolut)
-    ]);
-  })
-  .catch(console.error);
-
+module.exports = ({ accounts, counterparties, payments }) =>
+  testRevolutTransfers(accounts, payments);
+// .then(() => testCounterpartyPayment(accounts, counterparties, payments));
