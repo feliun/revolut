@@ -1,6 +1,6 @@
 # Tests for counterparty messages on sandbox
 
-I created a script to test counterparties functionalities against sandbox. The ran operations could be found [here](https://github.com/feliun/revolut/blob/master/bin/playground.js#L61-L70);
+I created a script to test counterparties functionalities against sandbox. The ran operations could be found [here](https://github.com/feliun/revolut/blob/master/playground/testCounterparties.js);
 
 Please find below some issues I found while testing.
 

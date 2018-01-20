@@ -7,7 +7,8 @@ const initRevolut = require('..');
 const {
   testAccounts,
   testCounterparties,
-  testPayments
+  testPayments,
+  testWebhooks
 } = require('require-all')(join(__dirname));
 
 const prompt = inquirer.createPromptModule();
@@ -39,7 +40,8 @@ prompt(questions)
     return sequential([
       testAccounts(revolut),
       testCounterparties(revolut),
-      testPayments(revolut)
+      testPayments(revolut),
+      // testWebhooks(revolut)
     ]);
   })
   .catch(console.error);
