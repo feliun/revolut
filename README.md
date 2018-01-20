@@ -3,9 +3,11 @@ A Revolut API client for Node JS
 
 This is a wrapper for [the Revolut API](https://revolutdev.github.io/business-api/#introduction)
 
+**WARNING**: this API has not yet been released by Revolut. Testing for this wrapper is WIP. Some use examples of this wrapper could be found (here)[https://github.com/feliun/revolut/tree/master/playground];
+
 This NodeJS APIs is helpful because:
 
-1. it hides revolut urls from you 
+1. it hides revolut urls from you
 2. Configuration is injected on startup and used everywhere in a transparent way
 3. It applies validation on input messages
 4. It exposes an API based on promises
@@ -19,7 +21,7 @@ To use the revolut wrapper you just need to initialise it like this:
 const initRevolut = require('revolut');
 const config = {
     environment: 'sandbox',
-    token: '7634253428AKHDJAGWD7868' 
+    token: '7634253428AKHDJAGWD7868'
     timeout: 2000
 };
 const revolut = initRevolut(config);
@@ -45,7 +47,7 @@ API for [counterparties](https://revolutdev.github.io/business-api/?shell--sandb
 
 ### add
 ```
-const revolutAccount = ...; 
+const revolutAccount = ...;
 // https://revolutdev.github.io/business-api/#add-counterparty
 return revolut.counterparties.add(revolut_account);
 ```
