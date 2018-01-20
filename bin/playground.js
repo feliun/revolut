@@ -1,3 +1,4 @@
+const assert = require('assert');
 const R = require('ramda');
 const { join } = require('path');
 const program = require('commander');
@@ -13,8 +14,7 @@ const {
 
 const {
   transfer,
-  payment: samplePayment,
-  payment_status
+  payment: samplePayment
 } = require('require-all')(join(__dirname, '..', 'test', 'fixtures', 'payments'));
 
 const prompt = inquirer.createPromptModule();
@@ -42,7 +42,7 @@ const sequential = R.reduce((chain, promise) => chain.then(promise), Promise.res
 
 const format = (json) => JSON.stringify(json, null, 2);
 
-const tryAccounts = (accounts) =>
+const tryAccounts = ({ accounts }) =>
   Promise.all([
     accounts.getAll(),
     accounts.get('7736d7a9-b283-4b22-a14a-0633054550e7')
@@ -52,12 +52,52 @@ const tryAccounts = (accounts) =>
     return Promise.resolve();
   });
 
-const tryPayments = (payments) =>
-  sequential([
-    Promise.resolve()
-  ]);
+const tryRevolutTransfers = (accounts, payments) => {
+  const byGBP = ({ currency }) => currency === 'GBP';
+  const byBalance = (a, b) => a.balance < b.balance;
 
-const tryCounterparties = (counterparties) =>
+  const processTransfer = (source, target, reference = '') => {
+    const unique = `${new Date().getTime()}`;
+    const revolutTransfer = {
+      request_id: unique,
+      source_account_id: source.id,
+      target_account_id: target.id,
+      amount: 10,
+      currency: 'GBP',
+      reference
+    };
+    return payments.transfer(revolutTransfer);
+  };
+
+  return accounts.getAll()
+    .then((myAccounts) => {
+      const gbpAccounts = myAccounts.filter(byGBP).sort(byBalance);
+      if (gbpAccounts.length < 2) throw new Error('At least 2 GBP revolut accounts are needed');
+      const [source, target] = gbpAccounts;
+      const firstRef = 'Reference 1 for revolut transfers';
+      return processTransfer(source, target, firstRef)
+        .then(({ state }) => {
+          assert.equal(state, 'completed');
+          console.log('Putting money back...');
+          const secondRef = 'Reference 2 for revolut transfers';
+          return processTransfer(target, source, secondRef)
+            .then(({ id, state: secondState }) => {
+              assert.equal(secondState, 'completed');
+              return payments.getStatusById(id)
+                .then((response) => {
+                  assert.equal(response.type, 'transfer');
+                  assert.equal(response.state, 'completed');
+                  assert.equal(response.reference, secondRef);
+                });
+            });
+        });
+    });
+};
+
+const tryPayments = ({ accounts, payments }) =>
+  tryRevolutTransfers(accounts, payments);
+
+const tryCounterparties = ({ counterparties }) =>
   sequential([
     // counterparties.add(revolut_account),
     counterparties.add(uk_account),
@@ -74,9 +114,9 @@ prompt(questions)
   .then(({ environment = program.environment, token = program.token }) => {
     const revolut = initRevolut({ environment, token, timeout: 5000 });
     return sequential([
-      tryAccounts(revolut.accounts),
-      tryCounterparties(revolut.counterparties),
-      tryPayments(revolut.payments)
+      tryAccounts(revolut),
+      tryCounterparties(revolut),
+      tryPayments(revolut)
     ]);
   })
   .catch(console.error);
