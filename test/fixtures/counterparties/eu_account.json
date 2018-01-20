@@ -1,15 +1,18 @@
 {
   "name": "John Smith Co.",
-  "country": "ESP",
+  "country": "ES",
+  "bank_country": "ES",
   "currency": "EUR",
   "account_no": "1111222233334444",
+  "iban": "ES44500105175407324931",
   "bic": "73663784",
   "email": "john@smith.co",
+  "company_name": "ACME Ltd",
   "address": {
     "street_line1": "Calle del Retiro",
     "region": "Centro",
     "postcode": "28014",
     "city": "Madrid",
-    "country": "ESP"
+    "country": "ES"
   }
 }

@@ -40,13 +40,16 @@ if (!program.token) {
 
 const sequential = R.reduce((chain, promise) => chain.then(promise), Promise.resolve());
 
+const format = (json) => JSON.stringify(json, null, 2);
+
 const tryAccounts = (accounts) =>
   Promise.all([
     accounts.getAll(),
     accounts.get('7736d7a9-b283-4b22-a14a-0633054550e7')
   ]).then(([myAccounts, myAccount]) => {
-    console.log('myAccounts', myAccounts);
-    console.log('myAccount', myAccount);
+    console.log(`myAccounts: ${format(myAccounts)}`);
+    console.log(`myAccount: ${format(myAccount)}`);
+    return Promise.resolve();
   });
 
 const tryPayments = (payments) =>
@@ -56,17 +59,20 @@ const tryPayments = (payments) =>
 
 const tryCounterparties = (counterparties) =>
   sequential([
-    counterparties.getAll().then(console.log),
     // counterparties.add(revolut_account),
-    // counterparties.add(uk_account),
-    // counterparties.add(us_account),
+    counterparties.add(uk_account),
+    counterparties.add(us_account),
     // counterparties.add(eu_account),
-    // counterparties.add(other_account)
+    // counterparties.add(other_account),
+    counterparties.getAll().then((cps) => {
+      const deletions = cps.map(({ id }) => counterparties.remove(id));
+      return Promise.all(deletions);
+    }),
   ]);
 
 prompt(questions)
   .then(({ environment = program.environment, token = program.token }) => {
-    const revolut = initRevolut({ environment, token, timeout: 1000 });
+    const revolut = initRevolut({ environment, token, timeout: 5000 });
     return sequential([
       tryAccounts(revolut.accounts),
       tryCounterparties(revolut.counterparties),
@@ -74,3 +80,4 @@ prompt(questions)
     ]);
   })
   .catch(console.error);
+

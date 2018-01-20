@@ -1,9 +1,11 @@
 {
   "name": "John Smith Co.",
   "country": "US",
+  "bank_country": "US",
+  "company_name": "ACME Ltd",
   "currency": "USD",
   "account_no": "12345678",
-  "routing_number": "73663784",
+  "routing_number": "736637845",
   "email": "john@smith.co",
   "address": {
     "street_line1": "34 Mei Dei",

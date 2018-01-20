@@ -1,15 +1,17 @@
 {
   "name": "John Smith Co.",
-  "country": "ESP",
-  "currency": "EUR",
+  "country": "PL",
+  "bank_country": "PL",
+  "currency": "PLN",
+  "company_name": "ACME Ltd",
   "account_no": "1111222233334444",
-  "bic": "73663784",
+  "bic": "736637848",
   "email": "john@smith.co",
   "address": {
-    "street_line1": "Calle del Retiro",
-    "region": "Centro",
-    "postcode": "28014",
-    "city": "Madrid",
-    "country": "ESP"
+    "street_line1": "some polish address",
+    "region": "Warsow",
+    "postcode": "dkslda",
+    "city": "Warsor",
+    "country": "PL"
   }
 }

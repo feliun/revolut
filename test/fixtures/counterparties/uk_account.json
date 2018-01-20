@@ -1,10 +1,12 @@
 {
   "name": "John Smith Co.",
+  "bank_country": "GB",
   "country": "GB",
   "currency": "GBP",
   "account_no": "12345678",
   "sort_code": "223344",
   "email": "john@smith.co",
+  "company_name": "ACME Ltd",
   "address": {
     "street_line1": "1 Canada Square",
     "street_line2": "Canary Wharf",
