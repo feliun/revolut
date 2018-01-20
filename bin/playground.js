@@ -52,6 +52,44 @@ const tryAccounts = ({ accounts }) =>
     return Promise.resolve();
   });
 
+const getGBPAccounts = (accounts) => {
+  const byGBP = ({ currency }) => currency === 'GBP';
+  const byBalance = (a, b) => a.balance < b.balance;
+
+  return accounts.getAll()
+    .then((myAccounts) => myAccounts.filter(byGBP).sort(byBalance));
+};
+
+const tryCounterpartyPayment = (accounts, counterparties, payments) => {
+  const processPayment = (source, target, reference = '') => {
+    const unique = `${new Date().getTime()}`;
+    const payment = {
+      request_id: unique,
+      account_id: source.id,
+      receiver: {
+        counterparty_id: target.id
+      },
+      amount: 10,
+      currency: 'GBP',
+      reference
+    };
+    return payments.pay(payment);
+  };
+
+  return counterparties.add(uk_account)
+    .then((newCounterparty) => getGBPAccounts(accounts)
+      .then((gbpAccounts) => {
+        if (gbpAccounts.length < 1) throw new Error('At least 1 GBP revolut account is needed');
+        const [myAccount] = gbpAccounts;
+        const reference = 'Testing payment to counterparty';
+        return processPayment(myAccount, newCounterparty, reference)
+          .then((result) => {
+            console.log(result);
+            return counterparties.remove(newCounterparty.counterpartyId);
+          });
+      }));
+};
+
 const tryRevolutTransfers = (accounts, payments) => {
   const byGBP = ({ currency }) => currency === 'GBP';
   const byBalance = (a, b) => a.balance < b.balance;
@@ -94,8 +132,9 @@ const tryRevolutTransfers = (accounts, payments) => {
     });
 };
 
-const tryPayments = ({ accounts, payments }) =>
+const tryPayments = ({ accounts, counterparties, payments }) =>
   tryRevolutTransfers(accounts, payments);
+// .then(() => tryCounterpartyPayment(accounts, counterparties, payments));
 
 const tryCounterparties = ({ counterparties }) =>
   sequential([
