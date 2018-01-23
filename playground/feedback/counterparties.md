@@ -6,64 +6,37 @@ Please find below some issues I found while testing.
 
 ## [Revolut counterparty](https://revolutdev.github.io/business-api/?shell--sandbox#add-revolut-counterparty)
 
-### Attempt #0
-
-**Payload**
-
-```
-{
-  "name": "John Smith Co.",
-  "profile_type": "business",
-  "phone": "+44723456789",
-  "email": "john@smith.com"
-}
-```
-
-**Response**
-> 400 - {"message":"One of companyName or individualName must be specified","code":3000}
-
-**Comment**: still unresolved
-
-After getting your feedback, I tried adding `company_name` and `individual_name` and these are the results.
-
 ### Attempt #1
 
-**Payload**
-
 ```
-{
-  "name": "John Smith Co.",
-  "profile_type": "business",
-  "phone": "+44723456789",
-  "email": "john@smith.com",
-  "company_name": "ACME Ltd"
-}
+revolut:counterparties Adding a new counterparty +0ms
+revolut:counterparties:validation Validating a revolut account +0ms
+revolut:request Posting {
+revolut:request "profile_type": "business",
+revolut:request "name": "John Smith",
+revolut:request "email": "john.gibson@revolut.com"
+revolut:request } to url https://sandbox-b2b.revolut.com/api/1.0/counterparty} +0ms
 ```
 
 **Response**
-> 400 - {"message":"Invalid request","code":3000}
+> 404 - {"message":"Resource not found","code":3006}
 
 **Comment**: still unresolved
 
 ### Attempt #2
 
-**Payload**
-
 ```
-{
-  "name": "John Smith Co.",
-  "profile_type": "personal",
-  "phone": "+44723456789",
-  "email": "john@smith.co",
-  "individual_name": {
-      "first_name": "John",
-      "last_name": "Smith"
-  }
-}
+revolut:counterparties Adding a new counterparty +0ms
+revolut:counterparties:validation Validating a revolut account +0ms
+revolut:request Posting {
+revolut:request "profile_type": "personal",
+revolut:request "name": "John Smith",
+revolut:request "phone": "+44723456789"
+revolut:request } to url https://sandbox-b2b.revolut.com/api/1.0/counterparty} +0ms
 ```
 
 **Response**
-> 400 - {"message":"Invalid request","code":3000}
+> 404 - {"message":"Resource not found","code":3006}
 
 **Comment**: still unresolved
 
