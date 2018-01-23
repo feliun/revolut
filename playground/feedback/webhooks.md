@@ -5,7 +5,7 @@ I created a script to test webhooks functionalities against sandbox. The ran ope
 The `setup` operation failed with the following error:
 
 ```
-400 - {"message":"Cannot construct instance of `com.revolut.stark.b2b.resources.webhook.CreateWebhookRequest` (although at least one Creator exists): no String-argument constructor/factory method to deserialize from String value ('http://localhost:3000/myendpoint')\n at [Source: (String)\"\"http://localhost:3000/myendpoint\"\"; line: 1, column: 1]","code":3000}
+500 - {"message":"Oops! An error occurred while processing your request. It has been logged for further investigation. Error Id: 374d6aab-d4a4-4d2c-bcf9-6b8850a47bd7"}
 ```
 
 I'm not sure what the requirement to setup a webhook is.
