@@ -6,6 +6,24 @@ Please find below some issues I found while testing.
 
 ## [Revolut counterparty](https://revolutdev.github.io/business-api/?shell--sandbox#add-revolut-counterparty)
 
+### Attempt #0
+
+**Payload**
+
+```
+{
+  "name": "John Smith Co.",
+  "profile_type": "business",
+  "phone": "+44723456789",
+  "email": "john@smith.com"
+}
+```
+
+**Response**
+> 400 - {"message":"One of companyName or individualName must be specified","code":3000}
+
+**Comment**: still unresolved
+
 After getting your feedback, I tried adding `company_name` and `individual_name` and these are the results.
 
 ### Attempt #1
@@ -15,9 +33,9 @@ After getting your feedback, I tried adding `company_name` and `individual_name`
 ```
 {
   "name": "John Smith Co.",
-  "profile_type": "personal",
+  "profile_type": "business",
   "phone": "+44723456789",
-  "email": "john@smith.co",
+  "email": "john@smith.com",
   "company_name": "ACME Ltd"
 }
 ```

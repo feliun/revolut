@@ -1,6 +1,6 @@
 {
   "name": "John Smith Co.",
-  "profile_type": "personal",
+  "profile_type": "business",
   "phone": "+44723456789",
-  "email": "john@smith.co"
+  "email": "john@smith.com"
 }
