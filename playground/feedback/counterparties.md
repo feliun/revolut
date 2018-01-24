@@ -4,42 +4,6 @@ I created a script to test counterparties functionalities against sandbox. The r
 
 Please find below some issues I found while testing.
 
-## [Revolut counterparty](https://revolutdev.github.io/business-api/?shell--sandbox#add-revolut-counterparty)
-
-### Attempt #1
-
-```
-revolut:counterparties Adding a new counterparty +0ms
-revolut:counterparties:validation Validating a revolut account +0ms
-revolut:request Posting {
-revolut:request "profile_type": "business",
-revolut:request "name": "John Smith",
-revolut:request "email": "john.gibson@revolut.com"
-revolut:request } to url https://sandbox-b2b.revolut.com/api/1.0/counterparty} +0ms
-```
-
-**Response**
-> 404 - {"message":"Resource not found","code":3006}
-
-**Comment**: still unresolved
-
-### Attempt #2
-
-```
-revolut:counterparties Adding a new counterparty +0ms
-revolut:counterparties:validation Validating a revolut account +0ms
-revolut:request Posting {
-revolut:request "profile_type": "personal",
-revolut:request "name": "John Smith",
-revolut:request "phone": "+44723456789"
-revolut:request } to url https://sandbox-b2b.revolut.com/api/1.0/counterparty} +0ms
-```
-
-**Response**
-> 404 - {"message":"Resource not found","code":3006}
-
-**Comment**: still unresolved
-
 ## [Non-revolut counterparty](https://revolutdev.github.io/business-api/?shell--sandbox#add-non-revolut-counterparty)
 
 My main problem was the fact that I was missing the field `bank_country`, which seems to be essential to tell apart the account type. Docs are not clear about this. After making these changes it worked for GB and US accounts.
