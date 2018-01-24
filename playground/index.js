@@ -41,7 +41,7 @@ prompt(questions)
       testAccounts(revolut),
       testCounterparties(revolut),
       testPayments(revolut),
-      // testWebhooks(revolut)
+      testWebhooks(revolut)
     ]);
   })
   .catch(console.error);
