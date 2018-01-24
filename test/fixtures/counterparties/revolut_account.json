@@ -1,5 +1,5 @@
 {
-  "profile_type": "personal",
+  "profile_type": "business",
   "name": "John Smith",
-  "phone": "+44723456789"
+  "email": "test@sandboxcorp.com"
 }

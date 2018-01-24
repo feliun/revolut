@@ -12,7 +12,7 @@ const sequential = R.reduce((chain, promise) => chain.then(promise), Promise.res
 
 module.exports = ({ counterparties }) =>
   sequential([
-    // counterparties.add(revolut_account),
+    counterparties.add(revolut_account),
     counterparties.add(uk_account),
     counterparties.add(us_account),
     // counterparties.add(eu_account),
