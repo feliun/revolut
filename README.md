@@ -1,9 +1,7 @@
 # revolut
 A Revolut API client for Node JS
 
-This is a wrapper for [the Revolut API](https://revolutdev.github.io/business-api/#introduction)
-
-**WARNING**: this API has not yet been released by Revolut. Testing for this wrapper is WIP. Some use examples of this wrapper could be found [here](https://github.com/feliun/revolut/tree/master/playground);
+This is a wrapper for [the Revolut API](https://revolutdev.github.io/business-api/#introduction). Some use examples of this wrapper could be found [here](https://github.com/feliun/revolut/tree/master/playground);
 
 This NodeJS APIs is helpful because:
 
