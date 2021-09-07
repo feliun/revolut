@@ -86,7 +86,5 @@ const testRevolutTransfers = (accounts, payments) => {
     });
 };
 
-
-module.exports = ({ accounts, counterparties, payments }) =>
-  testRevolutTransfers(accounts, payments);
+module.exports = ({ accounts, counterparties, payments }) => testRevolutTransfers(accounts, payments);
 // .then(() => testCounterpartyPayment(accounts, counterparties, payments));

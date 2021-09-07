@@ -1,9 +1,8 @@
 const R = require('ramda');
 const { join } = require('path');
-const { OK, NOT_FOUND, NO_CONTENT } = require('http-status-codes');
+const {StatusCodes} = require('http-status-codes');
 const expect = require('expect.js');
 const nock = require('nock');
-const initRevolut = require('../..');
 
 const {
   counterparties,
@@ -14,6 +13,7 @@ const {
   eu_account,
   other_account
 } = require('require-all')(join(__dirname, '..', 'fixtures', 'counterparties'));
+const initRevolut = require('../..');
 
 // Based on https://revolutdev.github.io/business-api/?shell--sandbox#counterparties
 
@@ -32,23 +32,22 @@ describe('Counterparties API', () => {
     it('POSTs a new counterparty', () => {
       nock(REVOLUT_URL, { reqheaders: { Authorization: `Bearer ${token}` } })
         .post('/counterparty', revolut_account)
-        .reply(OK, counterparty_response);
+        .reply(StatusCodes.OK, counterparty_response);
 
       return revolut.counterparties.add(revolut_account)
         .then((res) => expect(res).to.eql(counterparty_response));
     });
 
-    it('fails to DELETE a single counterparty if no counterparty ID is provided', () =>
-      Promise.resolve()
-        .then(() => revolut.counterparties.remove(null))
-        .then(() => { throw new Error('I shouldn not be here!'); })
-        .catch((error) => expect(error.message).to.equal('You need to provide a counterparty ID.')));
+    it('fails to DELETE a single counterparty if no counterparty ID is provided', () => Promise.resolve()
+      .then(() => revolut.counterparties.remove(null))
+      .then(() => { throw new Error('I shouldn not be here!'); })
+      .catch((error) => expect(error.message).to.equal('You need to provide a counterparty ID.')));
 
     it('DELETEs a single counterparty', () => {
       const myCounterparty = counterparties[0];
       nock(REVOLUT_URL, { reqheaders: { Authorization: `Bearer ${token}` } })
         .delete(`/counterparty/${myCounterparty.id}`)
-        .reply(NO_CONTENT);
+        .reply(StatusCodes.NO_CONTENT);
 
       return revolut.counterparties.remove(myCounterparty.id)
         .then((res) => expect(res).to.eql(undefined));
@@ -57,23 +56,22 @@ describe('Counterparties API', () => {
     it('GETs all counterparties', () => {
       nock(REVOLUT_URL, { reqheaders: { Authorization: `Bearer ${token}` } })
         .get('/counterparties')
-        .reply(OK, counterparties);
+        .reply(StatusCodes.OK, counterparties);
 
       return revolut.counterparties.getAll()
         .then((res) => expect(res).to.eql(counterparties));
     });
 
-    it('fails to get a single counterparty if no counterparty ID is provided', () =>
-      Promise.resolve()
-        .then(() => revolut.counterparties.get(null))
-        .then(() => { throw new Error('I shouldn not be here!'); })
-        .catch((error) => expect(error.message).to.equal('You need to provide a counterparty ID.')));
+    it('fails to get a single counterparty if no counterparty ID is provided', () => Promise.resolve()
+      .then(() => revolut.counterparties.get(null))
+      .then(() => { throw new Error('I shouldn not be here!'); })
+      .catch((error) => expect(error.message).to.equal('You need to provide a counterparty ID.')));
 
     it('GETs a single counterparty', () => {
       const myCounterparty = counterparties[0];
       nock(REVOLUT_URL, { reqheaders: { Authorization: `Bearer ${token}` } })
         .get(`/counterparty/${myCounterparty.id}`)
-        .reply(OK, myCounterparty);
+        .reply(StatusCodes.OK, myCounterparty);
 
       return revolut.counterparties.get(myCounterparty.id)
         .then((res) => expect(res).to.eql(myCounterparty));
@@ -82,12 +80,12 @@ describe('Counterparties API', () => {
     it('surfaces errors from Revolut', () => {
       nock(REVOLUT_URL, { reqheaders: { Authorization: `Bearer ${token}` } })
         .get('/counterparty/1234')
-        .reply(NOT_FOUND, undefined);
+        .reply(StatusCodes.NOT_FOUND, undefined);
 
       return revolut.counterparties.get(1234)
         .then(() => { throw new Error('I shouldn not be here!'); })
         .catch((error) => {
-          expect(error.statusCode).to.equal(NOT_FOUND);
+          expect(error.statusCode).to.equal(StatusCodes.NOT_FOUND);
           expect(error.message).to.equal('404 - undefined');
         });
     });
@@ -107,7 +105,7 @@ describe('Counterparties API', () => {
     const add = (counterparty) => {
       nock(REVOLUT_URL, { reqheaders: { Authorization: `Bearer ${token}` } })
         .post('/counterparty', counterparty)
-        .reply(OK, counterparty_response);
+        .reply(StatusCodes.OK, counterparty_response);
 
       return revolut.counterparties.add(counterparty);
     };
@@ -120,7 +118,7 @@ describe('Counterparties API', () => {
         return Promise.resolve()
           .then(() => add(faultyAccount))
           .then(() => { throw new Error('I should not be here!'); })
-          .catch((error) => expect(error.message).to.equal('ValidationError: child "name" fails because ["name" is required]'));
+          .catch((error) => expect(error.message).to.equal('ValidationError: "name" is required'));
       });
     });
 
@@ -132,7 +130,7 @@ describe('Counterparties API', () => {
         return Promise.resolve()
           .then(() => add(faultyAccount))
           .then(() => { throw new Error('I should not be here!'); })
-          .catch((error) => expect(error.message).to.equal('ValidationError: child "account_no" fails because ["account_no" is required]'));
+          .catch((error) => expect(error.message).to.equal('ValidationError: "account_no" is required'));
       });
     });
 
@@ -144,7 +142,7 @@ describe('Counterparties API', () => {
         return Promise.resolve()
           .then(() => add(faultyAccount))
           .then(() => { throw new Error('I should not be here!'); })
-          .catch((error) => expect(error.message).to.equal('ValidationError: child "bic" fails because ["bic" is required]'));
+          .catch((error) => expect(error.message).to.equal('ValidationError: "bic" is required'));
       });
     });
 
@@ -156,7 +154,7 @@ describe('Counterparties API', () => {
         return Promise.resolve()
           .then(() => add(faultyAccount))
           .then(() => { throw new Error('I should not be here!'); })
-          .catch((error) => expect(error.message).to.equal('ValidationError: child "routing_number" fails because ["routing_number" is required]'));
+          .catch((error) => expect(error.message).to.equal('ValidationError: "routing_number" is required'));
       });
     });
 
@@ -168,9 +166,8 @@ describe('Counterparties API', () => {
         return Promise.resolve()
           .then(() => add(faultyAccount))
           .then(() => { throw new Error('I should not be here!'); })
-          .catch((error) => expect(error.message).to.equal('ValidationError: child "bic" fails because ["bic" is required]'));
+          .catch((error) => expect(error.message).to.equal('ValidationError: "bic" is required'));
       });
     });
   });
 });
-

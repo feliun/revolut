@@ -3,13 +3,13 @@ const { OK, NO_CONTENT } = require('http-status-codes');
 const expect = require('expect.js');
 const nock = require('nock');
 const { join } = require('path');
-const initRevolut = require('../..');
 
 const {
   transfer,
   payment: samplePayment,
   payment_status
 } = require('require-all')(join(__dirname, '..', 'fixtures', 'payments'));
+const initRevolut = require('../..');
 
 // Based on https://revolutdev.github.io/business-api/?shell--sandbox#payments
 
@@ -39,7 +39,7 @@ describe('Payments API', () => {
       return Promise.resolve()
         .then(() => processTransfer(faultyTransfer))
         .then(() => { throw new Error('I should not be here!'); })
-        .catch((error) => expect(error.message).to.equal('ValidationError: child "currency" fails because ["currency" is required]'));
+        .catch((error) => expect(error.message).to.equal('ValidationError: "currency" is required'));
     });
   });
 
@@ -58,14 +58,13 @@ describe('Payments API', () => {
       return Promise.resolve()
         .then(() => processPayment(faultyPayment))
         .then(() => { throw new Error('I should not be here!'); })
-        .catch((error) => expect(error.message).to.equal('ValidationError: child "currency" fails because ["currency" is required]'));
+        .catch((error) => expect(error.message).to.equal('ValidationError: "currency" is required'));
     });
 
-    it('fails to get payment status if no transaction ID is provided', () =>
-      Promise.resolve()
-        .then(() => revolut.payments.getStatusById(null))
-        .then(() => { throw new Error('I should not be here!'); })
-        .catch((error) => expect(error.message).to.equal('You need to provide a transaction ID.')));
+    it('fails to get payment status if no transaction ID is provided', () => Promise.resolve()
+      .then(() => revolut.payments.getStatusById(null))
+      .then(() => { throw new Error('I should not be here!'); })
+      .catch((error) => expect(error.message).to.equal('You need to provide a transaction ID.')));
 
     it('GETs payment status by ID', () => {
       const txId = 123456;
@@ -76,11 +75,10 @@ describe('Payments API', () => {
         .then((response) => expect(response).to.eql(payment_status));
     });
 
-    it('fails to get payment status if no request ID is provided', () =>
-      Promise.resolve()
-        .then(() => revolut.payments.getStatusByRequestId(null))
-        .then(() => { throw new Error('I should not be here!'); })
-        .catch((error) => expect(error.message).to.equal('You need to provide a request ID.')));
+    it('fails to get payment status if no request ID is provided', () => Promise.resolve()
+      .then(() => revolut.payments.getStatusByRequestId(null))
+      .then(() => { throw new Error('I should not be here!'); })
+      .catch((error) => expect(error.message).to.equal('You need to provide a request ID.')));
 
     it('GETs payment status by ID', () => {
       const reqId = 123456;
@@ -91,11 +89,10 @@ describe('Payments API', () => {
         .then((response) => expect(response).to.eql(payment_status));
     });
 
-    it('fails to DELETE a payment if no transaction ID is provided', () =>
-      Promise.resolve()
-        .then(() => revolut.payments.cancel(null))
-        .then(() => { throw new Error('I shouldn not be here!'); })
-        .catch((error) => expect(error.message).to.equal('You need to provide a transaction ID.')));
+    it('fails to DELETE a payment if no transaction ID is provided', () => Promise.resolve()
+      .then(() => revolut.payments.cancel(null))
+      .then(() => { throw new Error('I shouldn not be here!'); })
+      .catch((error) => expect(error.message).to.equal('You need to provide a transaction ID.')));
 
     it('DELETEs a payment', () => {
       const txId = 123456789;
@@ -128,4 +125,3 @@ describe('Payments API', () => {
     });
   });
 });
-

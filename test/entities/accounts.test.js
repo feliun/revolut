@@ -27,11 +27,10 @@ describe('Accounts API', () => {
       .then((res) => expect(res).to.eql(accounts));
   });
 
-  it('fails to get a single account if no account ID is provided', () =>
-    Promise.resolve()
-      .then(() => revolut.accounts.get(null))
-      .then(() => { throw new Error('I shouldn not be here!'); })
-      .catch((error) => expect(error.message).to.equal('You need to provide an account ID.')));
+  it('fails to get a single account if no account ID is provided', () => Promise.resolve()
+    .then(() => revolut.accounts.get(null))
+    .then(() => { throw new Error('I shouldn not be here!'); })
+    .catch((error) => expect(error.message).to.equal('You need to provide an account ID.')));
 
   it('GETs a single account', () => {
     const myAccount = accounts[0];
@@ -56,4 +55,3 @@ describe('Accounts API', () => {
       });
   });
 });
-

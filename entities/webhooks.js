@@ -7,4 +7,3 @@ module.exports = ({ url, request }) => ({
     return request.post(`${url}/webhook`, webhook);
   }
 });
-

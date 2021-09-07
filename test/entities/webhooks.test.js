@@ -1,9 +1,9 @@
 const { OK } = require('http-status-codes');
 const nock = require('nock');
 const { join } = require('path');
-const initRevolut = require('../..');
 
 const { webhook } = require('require-all')(join(__dirname, '..', 'fixtures', 'webhooks'));
+const initRevolut = require('../..');
 
 // Based on https://revolutdev.github.io/business-api/?shell--sandbox#web-hooks
 
@@ -29,4 +29,3 @@ describe('Webhook API', () => {
     it('POSTs a webhook', () => setup(webhook));
   });
 });
-

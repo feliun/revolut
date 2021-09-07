@@ -2,14 +2,13 @@ const program = require('commander');
 const inquirer = require('inquirer');
 const R = require('ramda');
 const { join } = require('path');
-const initRevolut = require('..');
-
 const {
   testAccounts,
   testCounterparties,
   testPayments,
   testWebhooks
 } = require('require-all')(join(__dirname));
+const initRevolut = require('..');
 
 const prompt = inquirer.createPromptModule();
 

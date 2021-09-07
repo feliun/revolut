@@ -13,4 +13,3 @@ module.exports = ({ url, request }) => ({
     return request.get(`${url}/accounts/${accountId}`);
   },
 });
-

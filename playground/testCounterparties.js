@@ -10,15 +10,14 @@ const {
 
 const sequential = R.reduce((chain, promise) => chain.then(promise), Promise.resolve());
 
-module.exports = ({ counterparties }) =>
-  sequential([
-    counterparties.add(revolut_account),
-    counterparties.add(uk_account),
-    counterparties.add(us_account),
-    // counterparties.add(eu_account),
-    // counterparties.add(other_account),
-    counterparties.getAll().then((cps) => {
-      const deletions = cps.map(({ id }) => counterparties.remove(id));
-      return Promise.all(deletions);
-    }),
-  ]);
+module.exports = ({ counterparties }) => sequential([
+  counterparties.add(revolut_account),
+  counterparties.add(uk_account),
+  counterparties.add(us_account),
+  // counterparties.add(eu_account),
+  // counterparties.add(other_account),
+  counterparties.getAll().then((cps) => {
+    const deletions = cps.map(({ id }) => counterparties.remove(id));
+    return Promise.all(deletions);
+  }),
+]);
